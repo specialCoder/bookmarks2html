@@ -12,6 +12,10 @@
 ![Manifest](https://img.shields.io/badge/manifest-V3-green)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-informational)
 
+![新标签页主页：带书签计数的文件夹 Tab、卡片网格、悬停显示完整网址的提示框](docs/assets/screenshot-home-light.png)
+
+> 截图为浅色主题 + 英文界面下的新标签页主页；把光标停在卡片上会用提示框显示完整标题与网址。
+
 ---
 
 ## 功能特性
@@ -149,6 +153,7 @@ bookmarks2html/
 │  └─ mock-chrome.js       # 开发预览用的 chrome.* 模拟层（50 条示例书签）
 ├─ dev-preview.html        # 开发预览外壳（fetch + 动态注入目标页面）
 ├─ docs/                   # GitHub Pages 落地页、隐私政策、商店文案
+│  └─ assets/              # 落地页与本 README 使用的截图
 ├─ scripts/package.sh      # 生成发布用压缩包
 ├─ TEST_CASES.md           # 手动测试清单
 ├─ CHANGELOG.md

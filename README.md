@@ -14,6 +14,10 @@ behavior is the opt-in "page descriptions" feature that you enable yourself in s
 ![Manifest](https://img.shields.io/badge/manifest-V3-green)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-informational)
 
+![New tab page showing folder tabs with bookmark counts, a card grid with site icons and URLs, a hover tooltip, and the More apps button](docs/assets/screenshot-home-light.png)
+
+> Light theme, English UI. Hovering a card shows a tooltip with the full title and URL.
+
 ---
 
 ## Features
@@ -167,6 +171,7 @@ bookmarks2html/
 │  └─ mock-chrome.js       # chrome.* mock layer for the dev preview (50 sample bookmarks)
 ├─ dev-preview.html        # dev preview shell (fetches and injects the target page)
 ├─ docs/                   # GitHub Pages landing page, privacy policy, store listing copy
+│  └─ assets/              # screenshot used by the landing page and this README
 ├─ scripts/package.sh      # builds the distributable zip
 ├─ TEST_CASES.md           # manual test checklist
 ├─ CHANGELOG.md

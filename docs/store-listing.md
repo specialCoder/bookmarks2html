@@ -122,10 +122,16 @@ This is an optional, on-demand permission that is not requested at install time.
 
 ## 8. Assets checklist (upload separately in the Dashboard)
 
-- [ ] Icon (128×128) — `icons/icon128.png`
+- [x] Icon (128×128) — ready at `icons/icon128.png`
+- [x] Screenshot #1 (1280×800, the store maximum) — `docs/assets/screenshot-home-light.png`:
+      light theme, English UI, card view with folder-tab counts and the hover tooltip.
+      Reused on the landing page (`docs/index.html`) and at the top of both READMEs.
+- [ ] Screenshots #2+ (optional, the store accepts up to 10) — dark theme, list view, options page
 - [ ] Store banner (1280×800)
-- [ ] Screenshots (≥1, min 1280×800 or 640×400) — capture the new tab page in light and dark,
-      card and list view, plus the settings page
 - [ ] Small promo tile (440×280)
 - [ ] Privacy policy URL (§5) is live and reachable
 - [ ] Description text (§2–§4) pasted, character limits confirmed by the Dashboard
+
+> Screenshot #1 was captured against the developer's real bookmark tree, so it shows real folder and
+> site names. Re-shoot it from the dev preview (`dev-preview.html`, 50 sample bookmarks) if you would
+> rather not expose them in the store listing.
