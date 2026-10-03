@@ -163,6 +163,7 @@ bookmarks2html/
 │  ├─ shared.js            # B2H module: settings, i18n dictionary, bookmark index, components
 │  ├─ newtab.js            # homepage logic
 │  └─ options.js           # settings page logic
+│                          # (runtime code only — tooling lives in tools/)
 ├─ styles/
 │  ├─ base.css             # design system: tokens, buttons, cards, themes
 │  ├─ newtab.css           # homepage styles
@@ -173,7 +174,8 @@ bookmarks2html/
 ├─ dev-preview.html        # dev preview shell (fetches and injects the target page)
 ├─ docs/                   # GitHub Pages landing page, privacy policy, store listing copy
 │  └─ assets/              # screenshot used by the landing page and this README
-├─ scripts/package.sh      # builds the distributable zip
+├─ tools/
+│  └─ package.sh           # builds the distributable zip (never shipped inside it)
 ├─ TEST_CASES.md           # manual test checklist
 ├─ CHANGELOG.md
 └─ LICENSE                 # Apache-2.0
@@ -205,11 +207,11 @@ preview must be served over HTTP (`file://` cannot fetch the page source), hence
 ## Release packaging
 
 Build a zip that contains **only what the extension needs to run** (runtime files plus `LICENSE`
-for license compliance). `dev/`, `dev-preview.html`, `docs/`, `scripts/` and the Markdown docs are
+for license compliance). `dev/`, `dev-preview.html`, `docs/`, `tools/` and the Markdown docs are
 excluded on purpose.
 
 ```bash
-./scripts/package.sh
+./tools/package.sh
 # → dist/bookmarks2html-v<version>.zip  (manifest.json at the zip root)
 ```
 

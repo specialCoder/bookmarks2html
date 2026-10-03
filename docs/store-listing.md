@@ -108,7 +108,7 @@ This is an optional, on-demand permission that is not requested at install time.
 ## 7. Store metadata
 
 - **Item name:** bookmarks2html
-- **Package:** build with `scripts/package.sh` →
+- **Package:** build with `tools/package.sh` →
   `dist/bookmarks2html-v<version>.zip` (manifest at zip root)
 - **Unlisted / public:** public; source published at https://github.com/specialCoder/bookmarks2html
 - **In-product promotion:** the header has a "More apps" button linking to

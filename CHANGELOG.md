@@ -19,6 +19,8 @@ The `version` field in `manifest.json` is kept in sync with the latest entry bel
   in-product brand (both languages), page titles, console log prefixes and all docs. The previous
   names 书签卡片 / Bookmark Cards / Bookmarks to Cards are gone; the Chinese UI text is unchanged
   apart from the brand.
+- `package.sh` moved from `scripts/` to `tools/`. `scripts/` is loaded at runtime by the manifest and
+  both pages, so build tooling did not belong there; the zip no longer needs a carve-out for it.
 
 ## [1.0.0] - 2026-10-03
 

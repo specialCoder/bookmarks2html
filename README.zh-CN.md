@@ -145,6 +145,7 @@ bookmarks2html/
 │  ├─ shared.js            # 共享模块 B2H：设置、双语字典、书签索引、通用组件
 │  ├─ newtab.js            # 主页逻辑
 │  └─ options.js           # 设置页逻辑
+│                          # 目录内只放运行时代码，工具脚本在 tools/
 ├─ styles/
 │  ├─ base.css             # 设计系统：变量、按钮、卡片、主题
 │  ├─ newtab.css           # 主页样式
@@ -155,7 +156,8 @@ bookmarks2html/
 ├─ dev-preview.html        # 开发预览外壳（fetch + 动态注入目标页面）
 ├─ docs/                   # GitHub Pages 落地页、隐私政策、商店文案
 │  └─ assets/              # 落地页与本 README 使用的截图
-├─ scripts/package.sh      # 生成发布用压缩包
+├─ tools/
+│  └─ package.sh           # 生成发布用压缩包（不会被打进包里）
 ├─ TEST_CASES.md           # 手动测试清单
 ├─ CHANGELOG.md
 └─ LICENSE                 # Apache-2.0
@@ -188,10 +190,10 @@ python3 -m http.server 8899
 ## 发布打包
 
 生成**只含扩展运行所需内容**的压缩包（运行文件 + 许可合规所需的 `LICENSE`）；
-`dev/`、`dev-preview.html`、`docs/`、`scripts/` 与各类 Markdown 文档都会被排除。
+`dev/`、`dev-preview.html`、`docs/`、`tools/` 与各类 Markdown 文档都会被排除。
 
 ```bash
-./scripts/package.sh
+./tools/package.sh
 # → dist/bookmarks2html-v<version>.zip（manifest.json 位于压缩包根目录）
 ```
 

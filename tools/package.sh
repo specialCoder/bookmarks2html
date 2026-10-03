@@ -3,7 +3,7 @@
 # Package ONLY the files the extension needs into a distributable zip.
 # Output: dist/bookmarks2html-v<version>.zip (manifest.json at zip root)
 #
-# Excluded on purpose: dev/, dev-preview.html, docs/, scripts/package.sh,
+# Excluded on purpose: dev/, dev-preview.html, docs/, tools/,
 # README*, CHANGELOG.md, TEST_CASES.md, .git/ — none of these are needed to run
 # the extension.
 #
@@ -46,8 +46,8 @@ done
 mkdir -p "$OUT_DIR"
 rm -f "$OUT"
 
-# -r recurse, -X strip extra file attributes, -x drop the packaging script and OS cruft.
-zip -r -X "$OUT" "${INCLUDES[@]}" -x 'scripts/package.sh' '*.DS_Store' '*/.git/*' '.git/*' >/dev/null
+# -r recurse, -X strip extra file attributes, -x drop OS cruft.
+zip -r -X "$OUT" "${INCLUDES[@]}" -x '*.DS_Store' '*/.git/*' '.git/*' >/dev/null
 
 echo "Packaged: $OUT"
 echo "Version:  $VERSION"
