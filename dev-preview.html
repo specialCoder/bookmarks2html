@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>开发预览 · 书签卡片</title>
+    <link rel="icon" href="icons/icon48.png">
+    <script src="dev/mock-chrome.js"></script>
+    <style>
+      .devbar {
+        position: fixed;
+        left: 14px;
+        bottom: 14px;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 5px 6px 5px 10px;
+        border: 1px solid rgba(120, 130, 160, 0.35);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.86);
+        box-shadow: 0 8px 22px rgba(20, 24, 46, 0.16);
+        backdrop-filter: blur(10px) saturate(1.4);
+        font: 12px/1.4 system-ui, -apple-system, "PingFang SC", sans-serif;
+        color: #4a5069;
+      }
+      .devbar__tag {
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #5b63f5;
+      }
+      .devbar a,
+      .devbar button {
+        padding: 3px 9px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .devbar a:hover,
+      .devbar button:hover {
+        background: rgba(91, 99, 245, 0.12);
+      }
+      .devbar a[aria-current="page"] {
+        background: rgba(91, 99, 245, 0.16);
+        color: #3f47d8;
+        font-weight: 600;
+      }
+      html[data-theme="dark"] .devbar {
+        border-color: rgba(150, 160, 200, 0.22);
+        background: rgba(24, 27, 38, 0.86);
+        color: #b8bed6;
+      }
+      html[data-theme="dark"] .devbar a[aria-current="page"] {
+        color: #a9b0ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="devbar" id="devbar">
+      <span class="devbar__tag">开发预览</span>
+      <a href="?page=newtab">新标签页</a>
+      <a href="?page=options">设置页</a>
+      <button type="button" id="devbarHide">隐藏</button>
+    </div>
+
+    <script>
+      (() => {
+        'use strict';
+
+        const params = new URLSearchParams(location.search);
+        const page = (params.get('page') || 'newtab').replace(/[^a-z0-9_-]/gi, '');
+        const target = `${page}.html`;
+
+        /* 加时间戳绕开浏览器缓存，保证预览始终反映当前文件 */
+        const bust = (url) => `${url}${String(url).includes('?') ? '&' : '?'}v=${Date.now()}`;
+
+        function loadScript(src) {
+          return new Promise((resolve, reject) => {
+            const el = document.createElement('script');
+            el.src = bust(src);
+            el.onload = () => resolve();
+            el.onerror = () => reject(new Error(`无法加载脚本：${src}`));
+            document.head.append(el);
+          });
+        }
+
+        async function boot() {
+          const response = await fetch(target, { cache: 'no-store' });
+          if (!response.ok) throw new Error(`${target} 返回 ${response.status}`);
+          const source = await response.text();
+          const doc = new DOMParser().parseFromString(source, 'text/html');
+          document.title = `开发预览 · ${doc.title}`;
+
+          /* head 里的脚本与样式，保持原有顺序（theme-init 必须先跑） */
+          for (const node of doc.head.children) {
+            if (node.tagName === 'SCRIPT' && node.getAttribute('src')) {
+              await loadScript(node.getAttribute('src'));
+            } else if (node.tagName === 'LINK') {
+              const link = node.cloneNode(true);
+              link.href = bust(link.getAttribute('href'));
+              document.head.append(link);
+            }
+          }
+
+          /* 页面结构（脚本留到后面按顺序执行） */
+          document.body.className = doc.body.className;
+          for (const node of doc.body.children) {
+            if (node.tagName === 'SCRIPT') continue;
+            document.body.append(document.importNode(node, true));
+          }
+
+          for (const node of doc.body.children) {
+            if (node.tagName !== 'SCRIPT') continue;
+            const src = node.getAttribute('src');
+            if (!src) continue;
+            await loadScript(src);
+          }
+        }
+
+        const devbar = document.getElementById('devbar');
+        for (const link of devbar.querySelectorAll('a')) {
+          const value = new URL(link.href).searchParams.get('page') || 'newtab';
+          if (value === page) link.setAttribute('aria-current', 'page');
+        }
+        document.getElementById('devbarHide').addEventListener('click', () => {
+          devbar.style.display = 'none';
+        });
+        if (params.get('clean') === '1') devbar.style.display = 'none';
+
+        boot().catch((err) => {
+          document.body.insertAdjacentHTML(
+            'afterbegin',
+            `<pre style="margin:24px;padding:16px;border-radius:12px;background:#fff2f2;color:#a3242c;font:13px/1.6 ui-monospace,monospace;white-space:pre-wrap">开发预览启动失败：${err.message}
+请用 HTTP 方式访问本页（扩展页面无法被 file:// 直接 fetch），例如在项目目录运行：
+  python3 -m http.server 8899
+然后打开 http://localhost:8899/dev-preview.html</pre>`
+          );
+        });
+      })();
+    </script>
+  </body>
+</html>

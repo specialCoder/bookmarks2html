@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title data-i18n="pageTitleOptions">书签卡片 · 设置</title>
+    <link rel="icon" href="icons/icon48.png">
+    <script src="scripts/theme-init.js"></script>
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/options.css">
+  </head>
+  <body class="page-options">
+    <div class="options">
+      <header class="options__header">
+        <img class="options__logo" src="icons/icon48.png" alt="">
+        <div>
+          <h1 data-i18n="pageTitleOptions">书签卡片 · 设置</h1>
+          <p class="options__sub" data-i18n="optHeaderSub">把浏览器书签变成清爽的卡片式主页</p>
+        </div>
+      </header>
+
+      <section class="panel">
+        <h2 class="panel__title" data-i18n="panelAppearance">外观</h2>
+
+        <div class="row">
+          <div class="row__label">
+            <span data-i18n="labelLanguage">语言</span>
+            <span class="row__hint" data-i18n="hintLanguage">界面显示语言，设置页与新标签页同时生效</span>
+          </div>
+          <div class="segmented" role="radiogroup" aria-label="语言">
+            <label><input type="radio" name="language" value="auto"><span data-i18n="langAuto">跟随系统</span></label>
+            <label><input type="radio" name="language" value="zh"><span data-i18n="langZh">中文</span></label>
+            <label><input type="radio" name="language" value="en"><span data-i18n="langEn">English</span></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row__label">
+            <span data-i18n="labelTheme">主题</span>
+            <span class="row__hint" data-i18n="hintTheme">跟随系统，或手动指定深浅色</span>
+          </div>
+          <div class="segmented" role="radiogroup" aria-label="主题">
+            <label><input type="radio" name="theme" value="auto"><span data-i18n="themeAuto">跟随系统</span></label>
+            <label><input type="radio" name="theme" value="light"><span data-i18n="themeLight">浅色</span></label>
+            <label><input type="radio" name="theme" value="dark"><span data-i18n="themeDark">深色</span></label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row__label">
+            <span data-i18n="labelViewMode">视图模式</span>
+            <span class="row__hint" data-i18n="hintViewMode">卡片信息更丰富，列表更紧凑，适合快速扫读</span>
+          </div>
+          <select id="viewMode" aria-label="视图模式">
+            <option value="card" data-i18n="optCards">卡片</option>
+            <option value="list" data-i18n="optList">列表</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="row__label">
+            <span data-i18n="labelCardSize">卡片尺寸</span>
+            <span class="row__hint" data-i18n="hintCardSize">调整卡片密度，适配你的屏幕（列表模式不适用）</span>
+          </div>
+          <select id="cardSize" aria-label="卡片尺寸">
+            <option value="compact" data-i18n="sizeCompact">紧凑</option>
+            <option value="comfortable" data-i18n="sizeComfortable">舒适</option>
+            <option value="large" data-i18n="sizeLarge">宽松</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <label class="check"><input type="checkbox" id="showFavicon"><span data-i18n="checkFavicon">显示网站图标（失败时显示彩色首字母）</span></label>
+        </div>
+        <div class="row">
+          <label class="check"><input type="checkbox" id="showUrl"><span data-i18n="checkUrl">显示网址</span></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel__title" data-i18n="panelBehavior">行为</h2>
+
+        <div class="row">
+          <label class="check"><input type="checkbox" id="showFolderPath"><span data-i18n="checkFolderPath">搜索结果中显示书签所在文件夹</span></label>
+        </div>
+        <div class="row row--stack">
+          <label class="check"><input type="checkbox" id="fetchDescriptions"><span data-i18n="checkDescriptions">抓取网页简介，显示在卡片上</span></label>
+          <span class="row__hint" data-i18n="hintDescriptions">
+            开启后会请求「读取网站数据」权限：扩展联网读取每个书签网页的简介并缓存在本地，读取失败时卡片仍显示网址。关闭即停止抓取。
+          </span>
+        </div>
+        <div class="row">
+          <div class="row__label">
+            <span data-i18n="labelEngine">搜索引擎</span>
+            <span class="row__hint" data-i18n="hintEngine">搜索无结果时按回车会用它搜索网页</span>
+          </div>
+          <select id="searchEngine" aria-label="搜索引擎">
+            <option value="google">Google</option>
+            <option value="bing">Bing</option>
+            <option value="baidu" data-i18n="engineBaidu">百度</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel__title" data-i18n="panelData">数据</h2>
+        <div class="row">
+          <div class="row__label">
+            <span id="statsLine">正在统计…</span>
+            <span class="row__hint" data-i18n="hintOrganize">整理书签：按 Ctrl/⌘ + Shift + O 打开 Chrome 书签管理器</span>
+          </div>
+        </div>
+        <div class="panel__actions">
+          <button class="btn" id="resetBtn" type="button" data-i18n="resetBtn">恢复默认设置</button>
+        </div>
+      </section>
+
+      <footer class="options__footer" data-i18n="optFooter">
+        书签数据由浏览器本地提供，扩展只读取展示，不会上传到任何服务器。
+      </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status" hidden></div>
+
+    <script src="scripts/shared.js"></script>
+    <script src="scripts/options.js"></script>
+  </body>
+</html>

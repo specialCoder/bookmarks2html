@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bookmarks to Cards — your bookmarks as a card-style new tab page</title>
+<meta name="description" content="A Manifest V3 Chrome extension that turns existing bookmarks into a clean card-based new tab page: folder tabs, instant search, light/dark themes, bilingual UI, zero dependencies.">
+<style>
+  :root{
+    --bg:#f3f4f9; --surface:#fff; --surface-2:#f5f6fb; --bd:rgba(22,26,45,.08);
+    --fg:#171a25; --fg2:#555c6e; --fg3:#8a90a3;
+    --acc:#5b63f5; --acc2:#8b5cf6; --rad:16px; --max:1040px;
+    --shadow:0 10px 24px -8px rgba(18,22,45,.16), 0 2px 6px -2px rgba(18,22,45,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;}
+  a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+  header.hero{padding:70px 0 42px;text-align:center;
+    background:radial-gradient(900px 340px at 50% -140px,rgba(91,99,245,.20),transparent 70%);}
+  .logo{width:64px;height:64px;border-radius:18px;display:inline-grid;place-items:center;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-size:28px;font-weight:700;
+    box-shadow:0 14px 30px -12px rgba(91,99,245,.7);}
+  header.hero h1{margin:18px 0 6px;font-size:34px;letter-spacing:-.4px}
+  header.hero p.tag{margin:0 auto;max-width:62ch;color:var(--fg2);font-size:17px}
+  .badges{margin:18px 0 26px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+  .badges img{height:20px}
+  .cta{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 22px;border-radius:999px;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-weight:600;
+    box-shadow:0 10px 24px -10px var(--acc)}
+  .cta:hover{color:#fff;text-decoration:none;box-shadow:0 14px 28px -10px var(--acc)}
+  .ghost{background:var(--surface);color:var(--fg);border:1px solid var(--bd);box-shadow:var(--shadow)}
+  .ghost:hover{color:var(--fg);box-shadow:var(--shadow)}
+  main{padding:8px 0 72px}
+  h2{font-size:22px;margin:44px 0 12px}
+  p,li{color:var(--fg2)}
+  ul{padding-left:22px} li{margin:7px 0}
+  .card{background:var(--surface);border:1px solid var(--bd);border-radius:var(--rad);
+    padding:22px 24px;margin:16px 0;box-shadow:var(--shadow)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:16px 0}
+  .feat h3{margin:0 0 4px;font-size:15.5px;color:var(--fg)}
+  .feat p{margin:0;font-size:14.5px;line-height:1.6}
+  table{width:100%;border-collapse:collapse;font-size:14.5px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--bd)}
+  th{color:var(--fg3);font-size:12.5px;text-transform:uppercase;letter-spacing:.05em}
+  td:first-child{color:var(--fg);font-weight:560}
+  code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
+  code{background:var(--surface-2);border:1px solid var(--bd);border-radius:6px;padding:1px 6px}
+  kbd{background:var(--surface);border:1px solid var(--bd);border-bottom-width:2px;border-radius:6px;padding:2px 7px;color:var(--fg)}
+  pre{margin:0;padding:16px;background:#12141c;color:#e6e9f2;border-radius:12px;overflow:auto;font-size:13.5px}
+  /* pure-CSS mock of the extension UI — no screenshot assets required */
+  .mock{margin-top:34px;background:var(--surface);border:1px solid var(--bd);border-radius:20px;
+    box-shadow:0 30px 60px -28px rgba(18,22,45,.35);overflow:hidden;text-align:left}
+  .mock__bar{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--bd)}
+  .mock__search{flex:1;max-width:340px;height:34px;border-radius:999px;background:var(--surface-2);
+    border:1px solid var(--bd);display:flex;align-items:center;padding:0 12px;color:var(--fg3);font-size:13px}
+  .mock__tabs{display:flex;gap:8px;padding:14px 16px 6px;overflow:hidden}
+  .mock__tab{flex:none;padding:6px 13px;border-radius:999px;border:1px solid var(--bd);
+    background:var(--surface);font-size:13px;color:var(--fg2)}
+  .mock__tab.on{background:linear-gradient(135deg,var(--acc),var(--acc2));border-color:transparent;
+    color:#fff;font-weight:600;box-shadow:0 6px 16px -6px var(--acc)}
+  .mock__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:12px 16px 18px}
+  .mock__card{display:flex;gap:10px;align-items:flex-start;padding:13px;border-radius:13px;
+    border:1px solid var(--bd);background:var(--surface-2)}
+  .tile{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+    color:#fff;font-size:14px;font-weight:700}
+  .mock__card b{display:block;font-size:13.5px;color:var(--fg)}
+  .mock__card span{display:block;font-size:12px;color:var(--fg3)}
+  footer{border-top:1px solid var(--bd);padding:24px 0 44px;color:var(--fg3);font-size:14px;text-align:center}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <span class="logo">B</span>
+    <h1>Bookmarks to Cards</h1>
+    <p class="tag">Your existing Chrome bookmarks, turned into a clean card-based new tab page —
+      folder tabs, instant search, light/dark themes and a bilingual UI. Manifest V3, zero dependencies,
+      nothing collected.</p>
+    <div class="badges">
+      <img alt="License: Apache-2.0" src="https://img.shields.io/badge/license-Apache--2.0-blue">
+      <img alt="Manifest V3" src="https://img.shields.io/badge/manifest-V3-green">
+      <img alt="Zero dependencies" src="https://img.shields.io/badge/dependencies-0-informational">
+    </div>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a class="cta" href="https://github.com/specialCoder/bookmarks2html">View on GitHub</a>
+      <a class="cta ghost" href="#install">Install from source</a>
+    </div>
+
+    <div class="mock" aria-hidden="true">
+      <div class="mock__bar">
+        <span class="tile" style="width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,var(--acc),var(--acc2))">B</span>
+        <div class="mock__search">Search bookmarks — Enter searches the web</div>
+      </div>
+      <div class="mock__tabs">
+        <span class="mock__tab on">All 50</span>
+        <span class="mock__tab">Dev tools</span>
+        <span class="mock__tab">AI tools</span>
+        <span class="mock__tab">Design</span>
+        <span class="mock__tab">Reading</span>
+      </div>
+      <div class="mock__grid">
+        <div class="mock__card"><span class="tile" style="background:#5b63f5">Z</span><div><b>Zhihu</b><span>Q&amp;A community</span></div></div>
+        <div class="mock__card"><span class="tile" style="background:#e5484d">J</span><div><b>Juejin</b><span>Developer articles</span></div></div>
+        <div class="mock__card"><span class="tile" style="background:#17a2b8">M</span><div><b>MDN Web Docs</b><span>Web platform reference</span></div></div>
+        <div class="mock__card"><span class="tile" style="background:#8b5cf6">S</span><div><b>sspai</b><span>Apps &amp; efficiency tools</span></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h2 id="features">Features</h2>
+    <div class="grid">
+      <div class="card feat"><h3>New tab takeover</h3><p><kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>T</kbd> is your bookmark homepage; the toolbar icon opens it in a tab, never a popup.</p></div>
+      <div class="card feat"><h3>Never a broken icon</h3><p>Icons come from Chrome's local favicon cache and fall back to a generated colored initial.</p></div>
+      <div class="card feat"><h3>Folder tabs + breadcrumb</h3><p>Tab per top-level folder, drill into nested folders, step back through the breadcrumb.</p></div>
+      <div class="card feat"><h3>Instant search</h3><p>Filters the whole tree as you type, highlights matches, and searches the web on Enter when nothing matches.</p></div>
+      <div class="card feat"><h3>Page descriptions (opt-in)</h3><p>Off by default. When enabled, descriptions are fetched locally-cached for 30 days; turning it off revokes the permission and clears the cache.</p></div>
+      <div class="card feat"><h3>Bilingual UI</h3><p>Simplified Chinese and English, following the system language or forced in settings — applied live to every open page.</p></div>
+      <div class="card feat"><h3>Cards or list</h3><p>Rich cards, or a denser multi-column list. Three card sizes, plus light/dark/system themes with no first-paint flash.</p></div>
+      <div class="card feat"><h3>Expand all</h3><p>Flatten every subfolder in view into one list with folder-path chips; one click restores hierarchy.</p></div>
+      <div class="card feat"><h3>Live sync</h3><p>Bookmark and setting changes propagate to open pages instantly — no reload needed.</p></div>
+    </div>
+
+    <h2 id="privacy">Privacy</h2>
+    <div class="card">
+      <p style="margin-top:0"><strong>Bookmarks stay in your browser.</strong> The extension reads the
+      bookmark tree and Chrome's local icon cache, renders them, and uploads nothing — no analytics,
+      no trackers, no server. The only network access is the description fetch you explicitly enable,
+      which requests your bookmark URLs without cookies. Read the full
+      <a href="./privacy.html">privacy policy</a>.</p>
+    </div>
+
+    <h2 id="install">Install (load unpacked)</h2>
+    <div class="card">
+      <ol style="margin:0;padding-left:22px;color:var(--fg2)">
+        <li>Clone the repository: <code>git clone https://github.com/specialCoder/bookmarks2html.git</code></li>
+        <li>Open <code>chrome://extensions</code> and enable <strong>Developer mode</strong>.</li>
+        <li>Click <strong>Load unpacked</strong> and select the repository root (the folder with <code>manifest.json</code>).</li>
+        <li>Open a new tab. Requires Chrome 102+.</li>
+      </ol>
+      <p style="margin-bottom:0">After editing the code, click <strong>⟳ reload</strong> on the extension card
+      and reopen the new tab — a stale new-tab page keeps running the previous build.</p>
+    </div>
+
+    <h2 id="try">Try it without installing</h2>
+    <div class="card">
+      <p style="margin-top:0">The repo ships a dev preview that mocks the <code>chrome.*</code> APIs with 50
+      sample bookmarks, so both pages run in an ordinary browser tab:</p>
+      <pre>cd bookmarks2html
+python3 -m http.server 8899
+# open http://localhost:8899/dev-preview.html</pre>
+    </div>
+
+    <h2 id="shortcuts">Keyboard shortcuts</h2>
+    <div class="card">
+      <table>
+        <tr><th>Key</th><th>Action</th></tr>
+        <tr><td><kbd>/</kbd></td><td>Focus the search box</td></tr>
+        <tr><td><kbd>Enter</kbd></td><td>Open the first matching bookmark, or search the web when nothing matches</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Clear the query and return to the current folder view</td></tr>
+        <tr><td><kbd>⌘</kbd>/<kbd>Ctrl</kbd> + click</td><td>Open a card in a background tab (native browser behavior)</td></tr>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    &copy; 2026 specialCoder · Bookmarks to Cards · Apache License 2.0 ·
+    <a href="https://github.com/specialCoder/bookmarks2html">Source</a> ·
+    <a href="./privacy.html">Privacy</a>
+  </div>
+</footer>
+</body>
+</html>

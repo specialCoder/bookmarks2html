@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Bookmarks to Cards</title>
+<meta name="description" content="Privacy policy for the Bookmarks to Cards Chrome extension. It collects no data, uploads nothing, and only reaches the network when you opt in to page descriptions.">
+<style>
+  :root{
+    --bg:#f3f4f9; --panel:#fff; --bd:rgba(22,26,45,.08); --fg:#171a25; --mut:#555c6e;
+    --acc:#5b63f5; --rad:16px; --max:820px;
+    --shadow:0 10px 24px -8px rgba(18,22,45,.14), 0 2px 6px -2px rgba(18,22,45,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font:16px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;}
+  a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+  header.hero{padding:60px 0 28px;text-align:center;
+    background:radial-gradient(900px 320px at 50% -130px,rgba(91,99,245,.20),transparent 70%);}
+  header.hero h1{margin:0 0 8px;font-size:30px;letter-spacing:-.3px}
+  header.hero p{margin:0;color:var(--mut)}
+  main{padding:30px 0 72px}
+  h2{font-size:20px;margin:32px 0 10px;padding-top:6px}
+  p,li{color:#4b5263}
+  ul{padding-left:22px} li{margin:6px 0}
+  .card{background:var(--panel);border:1px solid var(--bd);border-radius:var(--rad);
+    padding:20px 22px;margin:18px 0;box-shadow:var(--shadow)}
+  .good{color:#0f9d58;font-weight:600}
+  .updated{color:var(--mut);font-size:14px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;
+    background:#eceef6;border:1px solid var(--bd);border-radius:6px;padding:1px 6px}
+  footer{border-top:1px solid var(--bd);padding:22px 0 40px;color:var(--mut);font-size:14px;text-align:center}
+  .back{display:inline-block;margin-bottom:10px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <h1>Privacy Policy</h1>
+    <p>Bookmarks to Cards · Chrome extension</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <a class="back" href="./index.html">&larr; Back to the extension page</a>
+
+    <div class="card">
+      <p style="margin-top:0"><span class="good">TL;DR —</span> Bookmarks to Cards collects
+      <strong>no personal data</strong>, <strong>uploads nothing</strong>, and contains no analytics or
+      advertising code. Your bookmarks are read from Chrome's own local API and rendered locally. The
+      extension makes <strong>no network requests at all</strong> unless you explicitly turn on
+      "Fetch page descriptions" in settings.</p>
+      <p class="updated" style="margin-bottom:0">Last updated: 2026-10-03</p>
+    </div>
+
+    <h2>What we do</h2>
+    <p>The extension's single purpose is to display your existing Chrome bookmarks as a card-based new
+    tab page. It reads the bookmark tree through the <code>chrome.bookmarks</code> API, reads site icons
+    through Chrome's <em>local</em> favicon cache, and renders both in the page. Settings are stored in
+    <code>chrome.storage.sync</code> so they follow your own signed-in Chrome profile.</p>
+
+    <h2>What we do <span class="good">not</span> do</h2>
+    <ul>
+      <li>We do <strong>not</strong> collect, transmit or sell any personally identifiable information.</li>
+      <li>We do <strong>not</strong> operate a server, and the extension never sends your data anywhere.</li>
+      <li>We do <strong>not</strong> read browsing history, cookies, form input or page content of the
+      sites you visit.</li>
+      <li>We do <strong>not</strong> run analytics, telemetry, or third-party trackers of any kind.</li>
+      <li>We do <strong>not</strong> modify your bookmarks — the extension only reads them.</li>
+    </ul>
+
+    <h2>The optional "Fetch page descriptions" feature</h2>
+    <p>This feature is <strong>off by default</strong>. When you turn it on, Chrome asks you to grant the
+    extension permission to read and change site data. Only then does the extension visit the URLs of
+    your own bookmarks to read each page's description (its <code>&lt;meta name="description"&gt;</code>
+    or equivalent text), limited to the first 200&nbsp;KB of the response.</p>
+    <ul>
+      <li>Requests are sent <strong>without credentials</strong>, so no cookies or login sessions are
+      attached.</li>
+      <li>Results are cached in <code>chrome.storage.local</code> on your device (30 days on success,
+      1 day before retrying a failure) and are never uploaded.</li>
+      <li>Turning the feature off <strong>immediately revokes</strong> the host permission and clears the
+      cached descriptions.</li>
+    </ul>
+
+    <h2>Local and synced storage</h2>
+    <p>The extension stores only:</p>
+    <ul>
+      <li><strong>Interface settings</strong> — language, theme, view mode, card size, display toggles,
+      search engine — in <code>chrome.storage.sync</code>, so your preferences follow your Chrome profile.</li>
+      <li><strong>Cached page descriptions</strong> in <code>chrome.storage.local</code>, and only if you
+      enabled the feature above.</li>
+    </ul>
+    <p>All of it stays on your device (or in your own Chrome account), and is removed when you uninstall
+    the extension.</p>
+
+    <h2>Permissions</h2>
+    <p>Each permission exists solely to deliver the bookmark homepage described above:</p>
+    <ul>
+      <li><strong>bookmarks</strong> — read the bookmark tree and listen for changes so the page stays
+      current. Read-only; the extension never writes or deletes bookmarks.</li>
+      <li><strong>favicon</strong> — request site icons from Chrome's local favicon service. This is a
+      local <code>chrome-extension://</code> endpoint, not a network request.</li>
+      <li><strong>storage</strong> — remember your interface settings and cache descriptions.</li>
+      <li><strong>Host access (optional, on request only)</strong> — requested only when you turn on
+      "Fetch page descriptions", so the extension can open the bookmark URLs you already have and read
+      their description text. Declining leaves the feature off; the extension has no host access by default.</li>
+    </ul>
+
+    <h2>Children's privacy</h2>
+    <p>The extension does not knowingly collect any information from anyone, including children. It is a
+    local bookmark viewer.</p>
+
+    <h2>Changes to this policy</h2>
+    <p>If this policy changes in a way that affects how data is handled, this page will be updated and the
+    "Last updated" date above will change.</p>
+
+    <h2>Contact</h2>
+    <p>Questions? Open an issue on the project's GitHub repository:
+    <a href="https://github.com/specialCoder/bookmarks2html" rel="noopener">
+    github.com/specialCoder/bookmarks2html</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    &copy; 2026 specialCoder · Bookmarks to Cards ·
+    <a href="./index.html">Home</a>
+  </div>
+</footer>
+</body>
+</html>
