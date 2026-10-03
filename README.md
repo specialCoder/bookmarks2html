@@ -1,4 +1,4 @@
-# Bookmarks to Cards (书签卡片)
+# bookmarks2html
 
 **English** | [简体中文](README.zh-CN.md)
 
@@ -17,6 +17,7 @@ behavior is the opt-in "page descriptions" feature that you enable yourself in s
 ![New tab page showing folder tabs with bookmark counts, a card grid with site icons and URLs, a hover tooltip, and the More apps button](docs/assets/screenshot-home-light.png)
 
 > Light theme, English UI. Hovering a card shows a tooltip with the full title and URL.
+> The capture predates the rename, so its header still shows the old brand — it will be replaced.
 
 ---
 

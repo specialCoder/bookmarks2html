@@ -252,7 +252,7 @@
     id: 'dev-preview',
     lastError: null,
     getURL: (path) => new URL(String(path).replace(/^\//, ''), document.baseURI).toString(),
-    getManifest: () => ({ name: '书签卡片', version: '1.0.0' }),
+    getManifest: () => ({ name: 'bookmarks2html', version: '1.0.0' }),
     openOptionsPage: () => {
       window.open('dev-preview.html?page=options', '_blank', 'noopener');
     },
@@ -370,7 +370,7 @@
       return hostGranted;
     },
     async request() {
-      console.info('[书签卡片] 预览环境自动授予「读取网站数据」权限（真实扩展会弹出授权确认）');
+      console.info('[bookmarks2html] 预览环境自动授予「读取网站数据」权限（真实扩展会弹出授权确认）');
       hostGranted = true;
       store[HOST_PERMISSION_KEY] = true;
       persist();
@@ -390,5 +390,5 @@
   const base = window.chrome && typeof window.chrome === 'object' ? window.chrome : {};
   window.chrome = Object.assign(base, { bookmarks, storage, runtime, tabs, permissions });
 
-  console.info('[书签卡片] 已启用开发预览模拟数据：%d 个书签', flat.length);
+  console.info('[bookmarks2html] 已启用开发预览模拟数据：%d 个书签', flat.length);
 })();

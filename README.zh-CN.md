@@ -1,4 +1,4 @@
-# 书签卡片（Bookmarks to Cards）
+# bookmarks2html
 
 [English](README.md) | **简体中文**
 
@@ -15,6 +15,7 @@
 ![新标签页主页：带书签计数的文件夹 Tab、卡片网格、悬停显示完整网址的提示框](docs/assets/screenshot-home-light.png)
 
 > 截图为浅色主题 + 英文界面下的新标签页主页；把光标停在卡片上会用提示框显示完整标题与网址。
+> 该截图拍摄于改名之前，顶栏品牌仍显示旧名，重拍后会替换。
 
 ---
 

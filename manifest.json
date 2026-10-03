@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "书签卡片",
-  "short_name": "书签卡片",
+  "name": "bookmarks2html",
+  "short_name": "bookmarks2html",
   "version": "1.0.0",
   "description": "把浏览器书签变成美观易读的卡片式主页：文件夹 Tab 切换、即时搜索、深浅色主题，新建标签页即书签首页。",
   "minimum_chrome_version": "102",

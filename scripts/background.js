@@ -1,4 +1,4 @@
-/* 书签卡片 · 后台脚本：初始化默认设置、图标点击打开主页、网页简介抓取 */
+/* bookmarks2html · 后台脚本：初始化默认设置、图标点击打开主页、网页简介抓取 */
 importScripts('shared.js');
 
 const DESCS_KEY = 'b2h-descriptions'; // chrome.storage.local：{ [网址]: { text, ts } }
@@ -30,7 +30,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
       await chrome.storage.sync.set({ settings: { ...B2H.DEFAULT_SETTINGS } });
     }
   } catch (err) {
-    console.warn('[书签卡片] 初始化设置失败', err);
+    console.warn('[bookmarks2html] 初始化设置失败', err);
   }
 
   if (details.reason === 'install') {
@@ -87,7 +87,7 @@ async function store(url, text) {
   try {
     await chrome.storage.local.set({ [DESCS_KEY]: cache });
   } catch (err) {
-    console.warn('[书签卡片] 写入简介缓存失败', err);
+    console.warn('[bookmarks2html] 写入简介缓存失败', err);
   }
 }
 
@@ -152,7 +152,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   handleDescribeRequest(message.urls || [])
     .then(sendResponse)
     .catch((err) => {
-      console.warn('[书签卡片] 处理简介请求失败', err);
+      console.warn('[bookmarks2html] 处理简介请求失败', err);
       sendResponse({ entries: {}, queued: 0 });
     });
   return true;

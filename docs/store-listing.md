@@ -1,22 +1,22 @@
 # Chrome Web Store — Listing & Review Materials
 
 Everything to paste into the Chrome Web Developer Dashboard when publishing
-**Bookmarks to Cards (书签卡片)**. Text is final; character counts were verified against the
+**bookmarks2html**. Text is final; character counts were verified against the
 store's limits.
 
 | Field | Limit | This listing |
 |-------|:-----:|:-----------:|
-| Item name | 45 | 18 |
+| Item name | 45 | 14 |
 | Single purpose statement | 150 | 122 |
-| Manifest `description` (short) | 132 | 120 |
-| Release notes | 1,000 | 997 |
+| Short description | 132 | 120 |
+| Release notes | 1,000 | 993 |
 | Each permission justification | 1,000 | 452 / 492 / 514 / 795 |
 
 ---
 
 ## 1. Identity
 
-- **Name:** Bookmarks to Cards
+- **Name:** bookmarks2html
 - **Version:** 1.0.0 (kept in sync with `manifest.json` and `CHANGELOG.md`)
 - **Website:** https://specialcoder.github.io/bookmarks2html/
 - **Source:** https://github.com/specialCoder/bookmarks2html
@@ -24,9 +24,9 @@ store's limits.
 - **Category:** Productivity
 - **Languages:** English, 简体中文 (the extension UI itself is bilingual)
 
-> The `name`, `short_name` and `description` currently in `manifest.json` are Chinese. For a
-> bilingual store listing, either ship `_locales` with `default_locale` or set the store item name
-> and description in the Dashboard, which override the manifest values.
+> `manifest.json` uses the same item name (`name` / `short_name` = `bookmarks2html`) but its
+> `description` is Chinese. Either ship `_locales` with a `default_locale` to make both languages
+> first-class, or fill the store name and description in the Dashboard — the Dashboard values win.
 
 ---
 
@@ -38,7 +38,7 @@ To display the bookmarks you already have in Chrome as a card-style new tab page
 
 ---
 
-## 3. Short description (manifest `description`, ≤132)
+## 3. Short description (≤132)
 
 ```
 Turn your Chrome bookmarks into a card-style new tab page: folder tabs, instant search, light/dark themes, bilingual UI.
@@ -49,7 +49,7 @@ Turn your Chrome bookmarks into a card-style new tab page: folder tabs, instant 
 ## 4. Release notes (≤1,000)
 
 ```
-Bookmarks to Cards turns the bookmarks you already have into a clean, readable new tab page.
+bookmarks2html turns the bookmarks you already have into a clean, readable new tab page.
 
 Why install it:
 - Your bookmarks become a homepage. Ctrl/⌘ + T opens a card grid of the links you actually save, grouped into tabs by your bookmark-bar folders, with breadcrumb drill-down into nested folders.
@@ -107,7 +107,7 @@ This is an optional, on-demand permission that is not requested at install time.
 
 ## 7. Store metadata
 
-- **Item name:** Bookmarks to Cards
+- **Item name:** bookmarks2html
 - **Package:** build with `scripts/package.sh` →
   `dist/bookmarks2html-v<version>.zip` (manifest at zip root)
 - **Unlisted / public:** public; source published at https://github.com/specialCoder/bookmarks2html
@@ -132,6 +132,7 @@ This is an optional, on-demand permission that is not requested at install time.
 - [ ] Privacy policy URL (§5) is live and reachable
 - [ ] Description text (§2–§4) pasted, character limits confirmed by the Dashboard
 
-> Screenshot #1 was captured against the developer's real bookmark tree, so it shows real folder and
-> site names. Re-shoot it from the dev preview (`dev-preview.html`, 50 sample bookmarks) if you would
-> rather not expose them in the store listing.
+> Screenshot #1 predates the rename to `bookmarks2html`, so its header still reads "Bookmark Cards",
+> and it was captured against the developer's real bookmark tree (real folder and site names).
+> Re-shoot it from the dev preview (`dev-preview.html`, 50 sample bookmarks) after reloading the
+> extension, so the store asset shows the current brand and no personal bookmarks.

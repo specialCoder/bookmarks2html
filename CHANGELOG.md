@@ -14,6 +14,12 @@ The `version` field in `manifest.json` is kept in sync with the latest entry bel
   new tab. Plain `<a target="_blank">` — no extra permission, no request until clicked; the label is
   localized (更多应用 / More apps) and hidden below 720px so the header never overflows.
 
+### Changed
+- The project is named `bookmarks2html` everywhere: `manifest.json` `name` / `short_name`, the
+  in-product brand (both languages), page titles, console log prefixes and all docs. The previous
+  names 书签卡片 / Bookmark Cards / Bookmarks to Cards are gone; the Chinese UI text is unchanged
+  apart from the brand.
+
 ## [1.0.0] - 2026-10-03
 
 Initial release: a Manifest V3 Chrome extension that turns your existing bookmarks into

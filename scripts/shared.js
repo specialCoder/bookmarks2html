@@ -1,4 +1,4 @@
-/* 书签卡片 · 共享模块：设置读写、主题、书签树索引、通用组件。
+/* bookmarks2html · 共享模块：设置读写、主题、书签树索引、通用组件。
    同时被扩展页面（newtab/options）与后台 service worker 使用。 */
 const B2H = (() => {
   'use strict';
@@ -25,10 +25,10 @@ const B2H = (() => {
 
   const I18N = {
     zh: {
-      brandName: '书签卡片',
+      brandName: 'bookmarks2html',
       brandTitle: '回到全部书签',
-      pageTitleNewtab: '书签卡片 · 新标签页',
-      pageTitleOptions: '书签卡片 · 设置',
+      pageTitleNewtab: 'bookmarks2html · 新标签页',
+      pageTitleOptions: 'bookmarks2html · 设置',
       searchPlaceholder: '搜索书签，回车搜索网页',
       searchLabel: '搜索书签',
       refresh: '刷新书签',
@@ -119,10 +119,10 @@ const B2H = (() => {
       optHeaderSub: '把浏览器书签变成清爽的卡片式主页',
     },
     en: {
-      brandName: 'Bookmark Cards',
+      brandName: 'bookmarks2html',
       brandTitle: 'Back to all bookmarks',
-      pageTitleNewtab: 'Bookmark Cards · New Tab',
-      pageTitleOptions: 'Bookmark Cards · Settings',
+      pageTitleNewtab: 'bookmarks2html · New Tab',
+      pageTitleOptions: 'bookmarks2html · Settings',
       searchPlaceholder: 'Search bookmarks — Enter searches the web',
       searchLabel: 'Search bookmarks',
       refresh: 'Refresh bookmarks',
@@ -269,7 +269,7 @@ const B2H = (() => {
       const stored = await chrome.storage.sync.get(SETTINGS_KEY);
       return { ...DEFAULT_SETTINGS, ...(stored && stored[SETTINGS_KEY]) };
     } catch (err) {
-      console.warn('[书签卡片] 读取设置失败', err);
+      console.warn('[bookmarks2html] 读取设置失败', err);
       return { ...DEFAULT_SETTINGS };
     }
   }

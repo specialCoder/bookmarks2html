@@ -1,4 +1,4 @@
-/* 书签卡片 · 新标签页：文件夹 Tab、卡片网格、搜索、面包屑下钻 */
+/* bookmarks2html · 新标签页：文件夹 Tab、卡片网格、搜索、面包屑下钻 */
 (() => {
   'use strict';
 
@@ -84,7 +84,7 @@
     try {
       await reloadBookmarks();
     } catch (err) {
-      console.error('[书签卡片] 初始化失败', err);
+      console.error('[bookmarks2html] 初始化失败', err);
       showEmpty(B2H.t('emptyLoadFailedTitle'), B2H.t('emptyLoadFailedText'), 'folder');
     }
     showWelcomeIfNeeded();
@@ -112,7 +112,7 @@
       await Promise.all([reloadBookmarks(), new Promise((resolve) => setTimeout(resolve, SPIN_MIN_MS))]);
       toast(B2H.t('toastRefreshed', { n: state.index.totalBookmarks }));
     } catch (err) {
-      console.error('[书签卡片] 刷新书签失败', err);
+      console.error('[bookmarks2html] 刷新书签失败', err);
       toast(B2H.t('toastRefreshFailed'));
     } finally {
       state.refreshing = false;
@@ -701,7 +701,7 @@
     }
 
     const reload = B2H.debounce(() => {
-      reloadBookmarks().catch((err) => console.warn('[书签卡片] 刷新书签失败', err));
+      reloadBookmarks().catch((err) => console.warn('[bookmarks2html] 刷新书签失败', err));
     }, 350);
     for (const name of ['onCreated', 'onRemoved', 'onChanged', 'onMoved', 'onChildrenReordered', 'onImportEnded']) {
       try {
@@ -765,7 +765,7 @@
         if (entry && entry.text) descriptions.set(url, entry.text);
       }
     } catch (err) {
-      console.warn('[书签卡片] 读取网页简介缓存失败', err);
+      console.warn('[bookmarks2html] 读取网页简介缓存失败', err);
     }
   }
 

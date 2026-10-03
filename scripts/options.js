@@ -1,4 +1,4 @@
-/* 书签卡片 · 设置页逻辑 */
+/* bookmarks2html · 设置页逻辑 */
 (() => {
   'use strict';
 
@@ -106,7 +106,7 @@
       await B2H.saveSettings(patch);
       toast(message);
     } catch (err) {
-      console.error('[书签卡片] 保存设置失败', err);
+      console.error('[bookmarks2html] 保存设置失败', err);
       toast(B2H.t('toastSaveFailed'));
     }
   }
