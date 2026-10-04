@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The `version` field in `manifest.json` is kept in sync with the latest entry below.
 
-## [Unreleased]
+## [1.1.0] - 2026-10-04
+
+Store policy fix: the new tab page no longer decides which search engine to use — it delegates
+web search to Chrome.
 
 ### Added
 - Header "More apps…" button (flame icon, orange gradient) that opens https://i.eatmango.cn/ in a
@@ -15,12 +18,19 @@ The `version` field in `manifest.json` is kept in sync with the latest entry bel
   localized (更多应用 / More apps) and hidden below 720px so the header never overflows.
 
 ### Changed
+- Enter on a query with no bookmark match now calls `chrome.search.query()`, so Chrome performs the
+  search with the engine the user selected in their own browser settings, in a new tab.
 - The project is named `bookmarks2html` everywhere: `manifest.json` `name` / `short_name`, the
   in-product brand (both languages), page titles, console log prefixes and all docs. The previous
   names 书签卡片 / Bookmark Cards / Bookmarks to Cards are gone; the Chinese UI text is unchanged
   apart from the brand.
 - `package.sh` moved from `scripts/` to `tools/`. `scripts/` is loaded at runtime by the manifest and
   both pages, so build tooling did not belong there; the zip no longer needs a carve-out for it.
+
+### Removed
+- The "Search engine" setting (Google / Bing / 百度) and the hard-coded search URLs behind it.
+  Picking an engine on the user's behalf is what the store's new-tab / search-experience policy
+  prohibits; a stored `searchEngine` value from an earlier version is simply ignored now.
 
 ## [1.0.0] - 2026-10-03
 

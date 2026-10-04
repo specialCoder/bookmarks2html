@@ -45,9 +45,11 @@ Legend: ☐ = not yet checked.
 | C1 | Type a query | Results filter as you type, matched substring highlighted | ☐ |
 | C2 | Search by URL fragment (e.g. `github.com`) | Matches on URL as well as title | ☐ |
 | C3 | Toggle "Folder path in search results" | Chips with the folder path appear/disappear | ☐ |
-| C4 | Query with no bookmark match, press `Enter` | Opens the configured search engine with the query | ☐ |
+| C4 | Query with no bookmark match, press `Enter` | A new tab opens with the query run by **Chrome's own default search engine** — the extension never picks or suggests an engine | ☐ |
 | C5 | Query with a match, press `Enter` | Opens the first matching bookmark in a new tab | ☐ |
 | C6 | Press `/` outside the input, then `Esc` in the input | `/` focuses search; `Esc` clears and restores the folder view | ☐ |
+| C7 | Change the default search engine in `chrome://settings/searchEngines`, then repeat C4 | The result follows that browser-level choice, proving nothing is hard-coded | ☐ |
+| C8 | Open the settings page | There is **no** "Search engine / 搜索引擎" row; the search section only holds "Fetch page descriptions" | ☐ |
 
 ## D. Views, theme, size, language
 

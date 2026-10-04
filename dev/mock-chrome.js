@@ -272,6 +272,15 @@
     },
   };
 
+  /* 真实扩展里 chrome.search.query 由 Chrome 用「用户自己设定的默认搜索引擎」执行；
+    预览环境拿不到默认引擎，因此只记录调用、不联网。 */
+  const search = {
+    Disposition: { CURRENT_TAB: 'CURRENT_TAB', NEW_TAB: 'NEW_TAB', NEW_WINDOW: 'NEW_WINDOW' },
+    async query(info = {}) {
+      console.info('[bookmarks2html] 预览环境模拟 chrome.search.query：%s（%s）', info.text, info.disposition);
+    },
+  };
+
   /* ---------------- 网页简介（模拟后台抓取） ---------------- */
 
   const DESC_KEY = 'b2h-descriptions';
@@ -388,7 +397,7 @@
   };
 
   const base = window.chrome && typeof window.chrome === 'object' ? window.chrome : {};
-  window.chrome = Object.assign(base, { bookmarks, storage, runtime, tabs, permissions });
+  window.chrome = Object.assign(base, { bookmarks, storage, runtime, tabs, search, permissions });
 
   console.info('[bookmarks2html] 已启用开发预览模拟数据：%d 个书签', flat.length);
 })();

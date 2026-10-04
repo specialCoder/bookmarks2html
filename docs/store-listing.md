@@ -9,15 +9,15 @@ store's limits.
 | Item name | 45 | 14 |
 | Single purpose statement | 150 | 122 |
 | Short description | 132 | 120 |
-| Release notes | 1,000 | 993 |
-| Each permission justification | 1,000 | 452 / 492 / 514 / 795 |
+| Release notes | 1,000 | 995 |
+| Each permission justification | 1,000 | 452 / 492 / 481 / 795 |
 
 ---
 
 ## 1. Identity
 
 - **Name:** bookmarks2html
-- **Version:** 1.0.0 (kept in sync with `manifest.json` and `CHANGELOG.md`)
+- **Version:** 1.1.0 (kept in sync with `manifest.json` and `CHANGELOG.md`)
 - **Website:** https://specialcoder.github.io/bookmarks2html/
 - **Source:** https://github.com/specialCoder/bookmarks2html
 - **License:** Apache-2.0
@@ -52,11 +52,11 @@ Turn your Chrome bookmarks into a card-style new tab page: folder tabs, instant 
 bookmarks2html turns the bookmarks you already have into a clean, readable new tab page.
 
 Why install it:
-- Your bookmarks become a homepage. Ctrl/⌘ + T opens a card grid of the links you actually save, grouped into tabs by your bookmark-bar folders, with breadcrumb drill-down into nested folders.
-- Find things fast. Search filters the whole tree as you type; when nothing matches, Enter hands the query to Google, Bing or Baidu.
+- Your bookmarks become a homepage. Ctrl/⌘ + T opens a card grid of the links you actually save, grouped into tabs by your bookmark-bar folders, with breadcrumb drill-down.
+- Find things fast. Search filters the whole tree as you type; when nothing matches, Enter hands the query to Chrome, so it uses your own default search engine.
 - Readable by design. Site icons fall back to a colored initial so a broken image never appears, with optional page descriptions, three card sizes and a denser list view.
 - Fits your setup. Light, dark or system theme applied before first paint, plus a Chinese / English interface that follows your browser language.
-- Private by design. Manifest V3, zero third-party code. It reads your bookmark tree through Chrome's own API and uploads nothing. No network requests at all unless you opt in to page descriptions — switch it off and that permission is revoked.
+- Private by design. Manifest V3, zero third-party code. It reads your bookmark tree through Chrome's own API and uploads nothing. No network requests at all unless you opt in to page descriptions — turning it off revokes that permission.
 ```
 
 ---
@@ -95,7 +95,7 @@ We use the favicon permission to render each bookmark's site icon through Chrome
 
 ### `storage`
 ```
-We use chrome.storage for two things only. (1) storage.sync: to remember the user's own interface settings — language, theme, view mode, card size, which fields cards display, and the preferred search engine — so they persist and follow the user's signed-in Chrome profile. (2) storage.local: to cache page descriptions that the user explicitly opted in to fetching, so pages are not re-requested within the cache window. Nothing is read from or written to any server; uninstalling the extension removes all of it.
+We use chrome.storage for two things only. (1) storage.sync: to remember the user's own interface settings — language, theme, view mode, card size, which fields cards display — so they persist and follow the user's signed-in Chrome profile. (2) storage.local: to cache page descriptions that the user explicitly opted in to fetching, so pages are not re-requested within the cache window. Nothing is read from or written to any server; uninstalling the extension removes all of it.
 ```
 
 ### Optional host permissions (`<all_urls>`)
@@ -108,6 +108,13 @@ This is an optional, on-demand permission that is not requested at install time.
 ## 7. Store metadata
 
 - **Item name:** bookmarks2html
+- **Policy correction (v1.1.0):** the rejected build shipped its own search-engine picker
+  (Google / Bing / Baidu) for the Enter-to-search fallback, which counts as changing the user's
+  search experience. That setting and those hard-coded URLs are removed; the fallback now calls
+  `chrome.search.query()`, so Chrome runs the search with the engine the user chose in
+  `chrome://settings/searchEngines`. The extension changes the new tab page only — it never touches
+  the default search provider, home page or start page, and it has a single purpose (bookmark
+  homepage).
 - **Package:** build with `tools/package.sh` →
   `dist/bookmarks2html-v<version>.zip` (manifest at zip root)
 - **Unlisted / public:** public; source published at https://github.com/specialCoder/bookmarks2html

@@ -12,7 +12,6 @@
     showUrl: $('showUrl'),
     fetchDescriptions: $('fetchDescriptions'),
     showFolderPath: $('showFolderPath'),
-    searchEngine: $('searchEngine'),
     resetBtn: $('resetBtn'),
     statsLine: $('statsLine'),
     toast: $('toast'),
@@ -56,7 +55,6 @@
     els.showFavicon.checked = settings.showFavicon;
     els.showUrl.checked = settings.showUrl;
     els.showFolderPath.checked = settings.showFolderPath;
-    els.searchEngine.value = settings.searchEngine;
     els.fetchDescriptions.checked = !!settings.fetchDescriptions;
   }
 
@@ -84,7 +82,6 @@
     els.showFavicon.addEventListener('change', () => save({ showFavicon: els.showFavicon.checked }));
     els.showUrl.addEventListener('change', () => save({ showUrl: els.showUrl.checked }));
     els.showFolderPath.addEventListener('change', () => save({ showFolderPath: els.showFolderPath.checked }));
-    els.searchEngine.addEventListener('change', () => save({ searchEngine: els.searchEngine.value }));
     els.fetchDescriptions.addEventListener('change', onToggleDescriptions);
 
     els.resetBtn.addEventListener('click', async () => {

@@ -419,7 +419,7 @@
     if (!results.length) {
       showEmpty(
         B2H.t('emptySearchTitle', { q: query }),
-        B2H.t('emptySearchText', { engine: engineLabel() }),
+        B2H.t('emptySearchText'),
         'search'
       );
       return;
@@ -551,13 +551,6 @@
     label.className = 'section-label';
     label.textContent = text;
     return label;
-  }
-
-  function engineLabel() {
-    const key = state.settings.searchEngine;
-    if (key === 'baidu') return B2H.t('engineBaidu');
-    if (key === 'bing') return B2H.t('engineBing');
-    return B2H.t('engineGoogle');
   }
 
   function appendHighlighted(target, text, query) {
@@ -728,12 +721,18 @@
     if (hit) {
       openUrl(hit.url);
     } else {
-      window.open(B2H.engineUrl(state.settings.searchEngine, query), '_blank', 'noopener');
+      searchWeb(query);
     }
   }
 
   function openUrl(url) {
     chrome.tabs.create({ url, active: true });
+  }
+
+  /* 搜网页必须走 Chrome Search API：由 Chrome 用用户自己设定的默认搜索引擎执行，
+     扩展不内置引擎、不替用户选择，符合商店对新标签页搜索体验的要求 */
+  function searchWeb(query) {
+    chrome.search.query({ text: query, disposition: chrome.search.Disposition.NEW_TAB });
   }
 
   function isTypingTarget(target) {

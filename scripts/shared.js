@@ -16,7 +16,6 @@ const B2H = (() => {
     showUrl: true,
     showFolderPath: true,
     fetchDescriptions: false, // 需用户授权网站访问权限后才抓取
-    searchEngine: 'google', // google | bing | baidu
   });
 
   /* ---------------- 多语言 ----------------
@@ -69,15 +68,12 @@ const B2H = (() => {
       emptyExpandedTitle: '这里还没有书签',
       emptyExpandedText: '在书签管理器里添加书签后，展开这里就能一次看全。',
       emptySearchTitle: '没有找到「{q}」',
-      emptySearchText: '按回车使用 {engine} 搜索网页内容。',
+      emptySearchText: '按回车用浏览器默认搜索引擎搜索网页内容。',
       folderTitle: '打开文件夹：{name}',
       untitledFolder: '未命名文件夹',
       bookmarkCount: '{n} 个书签',
       bookmarkCountOne: '{n} 个书签',
       welcomeToast: '已启用：每次新建标签页都会看到你的书签',
-      engineGoogle: 'Google',
-      engineBing: 'Bing',
-      engineBaidu: '百度',
       labelLanguage: '语言',
       hintLanguage: '界面显示语言，设置页与新标签页同时生效',
       langAuto: '跟随系统',
@@ -102,8 +98,6 @@ const B2H = (() => {
       checkDescriptions: '抓取网页简介，显示在卡片上',
       hintDescriptions:
         '开启后会请求「读取网站数据」权限：扩展联网读取每个书签网页的简介并缓存在本地，读取失败时卡片仍显示网址。关闭即停止抓取。',
-      labelEngine: '搜索引擎',
-      hintEngine: '搜索无结果时按回车会用它搜索网页',
       panelData: '数据',
       statsLine: '当前浏览器共有 {b} 个书签、{f} 个文件夹',
       statsFailed: '无法读取书签数据',
@@ -165,15 +159,12 @@ const B2H = (() => {
       emptyExpandedTitle: 'No bookmarks here yet',
       emptyExpandedText: 'Add bookmarks in the bookmark manager, then expand this view to see them all at once.',
       emptySearchTitle: 'No bookmarks match “{q}”',
-      emptySearchText: 'Press Enter to search the web with {engine}.',
+      emptySearchText: 'Press Enter to search the web with your browser’s default search engine.',
       folderTitle: 'Open folder: {name}',
       untitledFolder: 'Untitled folder',
       bookmarkCount: '{n} bookmarks',
       bookmarkCountOne: '{n} bookmark',
       welcomeToast: 'Enabled — your bookmarks now appear on every new tab',
-      engineGoogle: 'Google',
-      engineBing: 'Bing',
-      engineBaidu: 'Baidu',
       labelLanguage: 'Language',
       hintLanguage: 'Interface language, applies to this page and the new tab page',
       langAuto: 'System',
@@ -198,8 +189,6 @@ const B2H = (() => {
       checkDescriptions: 'Fetch page descriptions to show on cards',
       hintDescriptions:
         'When on, the extension asks for permission to read site data, then fetches and locally caches each page description. Cards fall back to the URL when a fetch fails; turning it off stops fetching.',
-      labelEngine: 'Search engine',
-      hintEngine: 'Used to search the web when Enter finds no bookmark matches',
       panelData: 'Data',
       statsLine: 'This browser has {b} bookmarks in {f} folders',
       statsFailed: "Couldn't read bookmark data",
@@ -255,12 +244,6 @@ const B2H = (() => {
     applyI18n();
     return currentLang;
   }
-
-  const SEARCH_ENGINES = {
-    google: { name: 'Google', url: (q) => `https://www.google.com/search?q=${encodeURIComponent(q)}` },
-    bing: { name: 'Bing', url: (q) => `https://www.bing.com/search?q=${encodeURIComponent(q)}` },
-    baidu: { name: '百度', url: (q) => `https://www.baidu.com/s?wd=${encodeURIComponent(q)}` },
-  };
 
   /* ---------------- 设置 ---------------- */
 
@@ -459,19 +442,10 @@ const B2H = (() => {
     };
   }
 
-  function engineName(key) {
-    return (SEARCH_ENGINES[key] || SEARCH_ENGINES.google).name;
-  }
-
-  function engineUrl(key, query) {
-    return (SEARCH_ENGINES[key] || SEARCH_ENGINES.google).url(query);
-  }
-
   return {
     DEFAULT_SETTINGS,
     THEME_LS_KEY,
     DESCRIPTIONS_KEY,
-    SEARCH_ENGINES,
     loadSettings,
     saveSettings,
     onSettingsChanged,
@@ -491,7 +465,5 @@ const B2H = (() => {
     searchBookmarks,
     buildIconTile,
     debounce,
-    engineName,
-    engineUrl,
   };
 })();

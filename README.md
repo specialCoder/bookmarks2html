@@ -30,8 +30,8 @@ behavior is the opt-in "page descriptions" feature that you enable yourself in s
 - **Folder tabs + breadcrumb drill-down** — tabs are built from the subfolders of your
   bookmark-bar roots; keep drilling into nested folders and step back through the breadcrumb.
 - **Instant search** — filters the whole tree as you type, highlights the match, can show each
-  hit's folder path, and on Enter with no match searches the web with your chosen engine
-  (Google / Bing / Baidu).
+  hit's folder path, and on Enter with no match hands the query to Chrome (`chrome.search.query()`),
+  so the web search runs in **the search engine you set in your own browser**.
 - **Page descriptions (optional, off by default)** — when enabled, the service worker reads each
   bookmark page's description and puts it on the card, caching results in `chrome.storage.local`
   with a 30-day TTL on success and 1-day on failure; cards fall back to the URL when a fetch fails.
@@ -110,7 +110,6 @@ the homepage. Everything is stored in `chrome.storage.sync`, so it follows your 
 | URLs | On / off | On |
 | Folder path in search results | On / off | On |
 | Page descriptions | On / off (requests site-data permission when turned on) | Off |
-| Search engine | Google / Bing / Baidu | Google |
 
 > "Fetch page descriptions" is off by default. Turning it on makes Chrome show a permission prompt;
 > turning it off immediately revokes that permission and clears the cached descriptions.
