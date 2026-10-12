@@ -717,22 +717,14 @@
     const query = els.searchInput.value.trim();
     if (!query) return;
 
+    /* 搜索只覆盖书签树：无匹配就停在空状态，不发起任何网页搜索，
+       这样扩展完全不干涉用户的搜索体验，也不需要 search 权限。 */
     const hit = state.index ? B2H.searchBookmarks(state.index, query, 1)[0] : null;
-    if (hit) {
-      openUrl(hit.url);
-    } else {
-      searchWeb(query);
-    }
+    if (hit) openUrl(hit.url);
   }
 
   function openUrl(url) {
     chrome.tabs.create({ url, active: true });
-  }
-
-  /* 搜网页必须走 Chrome Search API：由 Chrome 用用户自己设定的默认搜索引擎执行，
-     扩展不内置引擎、不替用户选择，符合商店对新标签页搜索体验的要求 */
-  function searchWeb(query) {
-    chrome.search.query({ text: query, disposition: chrome.search.Disposition.NEW_TAB });
   }
 
   function isTypingTarget(target) {

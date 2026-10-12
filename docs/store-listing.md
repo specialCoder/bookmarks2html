@@ -9,15 +9,15 @@ store's limits.
 | Item name | 45 | 14 |
 | Single purpose statement | 150 | 122 |
 | Short description | 132 | 120 |
-| Release notes | 1,000 | 995 |
-| Each permission justification | 1,000 | 452 / 492 / 481 / 795 |
+| Release notes | 1,000 | 925 |
+| Each permission justification | 1,000 | 452 / 492 / 481 / 792 |
 
 ---
 
 ## 1. Identity
 
 - **Name:** bookmarks2html
-- **Version:** 1.1.0 (kept in sync with `manifest.json` and `CHANGELOG.md`)
+- **Version:** 1.1.1 (kept in sync with `manifest.json` and `CHANGELOG.md`)
 - **Website:** https://specialcoder.github.io/bookmarks2html/
 - **Source:** https://github.com/specialCoder/bookmarks2html
 - **License:** Apache-2.0
@@ -52,11 +52,11 @@ Turn your Chrome bookmarks into a card-style new tab page: folder tabs, instant 
 bookmarks2html turns the bookmarks you already have into a clean, readable new tab page.
 
 Why install it:
-- Your bookmarks become a homepage. Ctrl/⌘ + T opens a card grid of the links you actually save, grouped into tabs by your bookmark-bar folders, with breadcrumb drill-down.
-- Find things fast. Search filters the whole tree as you type; when nothing matches, Enter hands the query to Chrome, so it uses your own default search engine.
-- Readable by design. Site icons fall back to a colored initial so a broken image never appears, with optional page descriptions, three card sizes and a denser list view.
+- Your bookmarks become a homepage. Ctrl/⌘ + T opens a card grid of the links you save, grouped into tabs by your bookmark-bar folders, with breadcrumb drill-down.
+- Find things fast. Search filters your whole bookmark tree as you type and shows each match's folder path — bookmarks only, never the web.
+- Readable by design. Icons fall back to a colored initial so a broken image never appears, with optional page descriptions, three card sizes and a denser list view.
 - Fits your setup. Light, dark or system theme applied before first paint, plus a Chinese / English interface that follows your browser language.
-- Private by design. Manifest V3, zero third-party code. It reads your bookmark tree through Chrome's own API and uploads nothing. No network requests at all unless you opt in to page descriptions — turning it off revokes that permission.
+- Private by design. Manifest V3, zero third-party code, no analytics. It reads your bookmark tree through Chrome's own API, uploads nothing, and makes no requests unless you opt in to page descriptions.
 ```
 
 ---
@@ -100,7 +100,7 @@ We use chrome.storage for two things only. (1) storage.sync: to remember the use
 
 ### Optional host permissions (`<all_urls>`)
 ```
-This is an optional, on-demand permission that is not requested at install time. The extension has a "Fetch page descriptions" switch that is off by default, so by default it has no host access and makes no network requests whatsoever. Only when the user turns that switch on does Chrome prompt for this permission, and it is then used for exactly one thing: opening the URLs already present in the user's own bookmark list to read each page's description text (the first 200 KB of the response), which is displayed on that bookmark's card. Requests are made without credentials, so no cookies or session data are sent. Results are cached locally and never uploaded. Turning the switch off immediately calls chrome.permissions.remove to revoke this permission and clears the cached descriptions.
+This is an optional, on-demand permission that is not requested at install time. The extension has a "Fetch page descriptions" switch that is off by default, so by default it has no host access and never opens a web page of its own. Only when the user turns that switch on does Chrome prompt for this permission, and it is then used for exactly one thing: opening the URLs already present in the user's own bookmark list to read each page's description text (the first 200 KB of the response), which is displayed on that bookmark's card. Requests are made without credentials, so no cookies or session data are sent. Results are cached locally and never uploaded. Turning the switch off immediately calls chrome.permissions.remove to revoke this permission and clears the cached descriptions.
 ```
 
 ---
@@ -108,13 +108,19 @@ This is an optional, on-demand permission that is not requested at install time.
 ## 7. Store metadata
 
 - **Item name:** bookmarks2html
-- **Policy correction (v1.1.0):** the rejected build shipped its own search-engine picker
-  (Google / Bing / Baidu) for the Enter-to-search fallback, which counts as changing the user's
-  search experience. That setting and those hard-coded URLs are removed; the fallback now calls
-  `chrome.search.query()`, so Chrome runs the search with the engine the user chose in
-  `chrome://settings/searchEngines`. The extension changes the new tab page only — it never touches
-  the default search provider, home page or start page, and it has a single purpose (bookmark
-  homepage).
+- **Policy correction 1 (v1.1.0) — search experience:** the first rejected build shipped its own
+  search-engine picker (Google / Bing / Baidu) for the Enter-to-search fallback, which counts as
+  changing the user's search experience. That setting and those hard-coded URLs were removed.
+- **Policy correction 2 (v1.1.1) — "Query" not reproducible:** the v1.1.0 fallback then called
+  `chrome.search.query()` without declaring the `search` permission, so `chrome.search` was
+  `undefined`, Enter threw a `TypeError` and nothing happened — the advertised Query behavior genuinely
+  did not work. Review allowed either fixing it or removing the code; **v1.1.1 removes it.** There is now
+  no web search anywhere in the package: `searchWeb()` and the `search` permission are gone, the search
+  box only filters the bookmark tree in memory, and the no-match state says "try another keyword"
+  instead of promising a search.
+- **How to verify:** open a new tab, type something that matches no bookmark, press `Enter` → the
+  "No bookmarks match" panel stays put, no tab opens, and DevTools → Network shows zero requests. In
+  the console, `typeof chrome.search` is `undefined`.
 - **Package:** build with `tools/package.sh` →
   `dist/bookmarks2html-v<version>.zip` (manifest at zip root)
 - **Unlisted / public:** public; source published at https://github.com/specialCoder/bookmarks2html

@@ -45,11 +45,13 @@ Legend: ☐ = not yet checked.
 | C1 | Type a query | Results filter as you type, matched substring highlighted | ☐ |
 | C2 | Search by URL fragment (e.g. `github.com`) | Matches on URL as well as title | ☐ |
 | C3 | Toggle "Folder path in search results" | Chips with the folder path appear/disappear | ☐ |
-| C4 | Query with no bookmark match, press `Enter` | A new tab opens with the query run by **Chrome's own default search engine** — the extension never picks or suggests an engine | ☐ |
+| C4 | Query with no bookmark match, press `Enter` | **Nothing navigates** — the "No bookmarks match" state stays on screen. There is no web-search fallback | ☐ |
 | C5 | Query with a match, press `Enter` | Opens the first matching bookmark in a new tab | ☐ |
 | C6 | Press `/` outside the input, then `Esc` in the input | `/` focuses search; `Esc` clears and restores the folder view | ☐ |
-| C7 | Change the default search engine in `chrome://settings/searchEngines`, then repeat C4 | The result follows that browser-level choice, proving nothing is hard-coded | ☐ |
+| C7 | DevTools → Network, then type a query and press `Enter` with no match | **Zero requests** — the extension opens no connection and performs no search | ☐ |
 | C8 | Open the settings page | There is **no** "Search engine / 搜索引擎" row; the search section only holds "Fetch page descriptions" | ☐ |
+| C9 | Placeholder text and the no-match empty state (zh and en) | Neither mentions searching the web; the empty state suggests another keyword or `Esc` | ☐ |
+| C10 | On the homepage, open DevTools and run `typeof chrome.search` | `"undefined"` — the package carries no web-search code and no `search` permission | ☐ |
 
 ## D. Views, theme, size, language
 

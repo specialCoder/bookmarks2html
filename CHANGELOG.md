@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 The `version` field in `manifest.json` is kept in sync with the latest entry below.
 
+## [1.1.1] - 2026-10-12
+
+Store policy fix: review could not reproduce the "Query" behavior 1.1.0 advertised — `chrome.search`
+needs the `search` permission, which that build did not declare, so Enter threw a `TypeError` and did
+nothing. Instead of adding a permission for a fallback nobody needs, the feature is removed and the
+listing now describes only what the extension actually does.
+
+### Removed
+- The Enter-with-no-match web search: the `searchWeb()` call path and the `search` permission. The
+  search box filters bookmarks only; with no match, Enter does nothing and the "nothing found" state
+  stays on screen. The package now contains no web search, no search-engine list and no search URLs,
+  so it cannot affect the user's search experience in any way.
+- The `chrome.search` mock in `dev/mock-chrome.js` and the failure toast that went with it.
+
+### Changed
+- Search box placeholder and the empty-search hint no longer promise a web search (both languages);
+  the keyboard docs now say Enter opens the first matching bookmark.
+- README (both languages), the privacy policy and the landing page are back to the accurate claim that
+  the extension makes no requests at all unless "Fetch page descriptions" is enabled — overstating
+  privacy is itself a listing-accuracy problem, which is half of what review flagged.
+
 ## [1.1.0] - 2026-10-04
 
 Store policy fix: the new tab page no longer decides which search engine to use — it delegates

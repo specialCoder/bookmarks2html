@@ -91,7 +91,7 @@
       <div class="card feat"><h3>New tab takeover</h3><p><kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>T</kbd> is your bookmark homepage; the toolbar icon opens it in a tab, never a popup.</p></div>
       <div class="card feat"><h3>Never a broken icon</h3><p>Icons come from Chrome's local favicon cache and fall back to a generated colored initial.</p></div>
       <div class="card feat"><h3>Folder tabs + breadcrumb</h3><p>Tab per top-level folder, drill into nested folders, step back through the breadcrumb.</p></div>
-      <div class="card feat"><h3>Instant search</h3><p>Filters the whole tree as you type, highlights matches, and on Enter with no match hands the query to Chrome — so the web search uses your own default search engine.</p></div>
+      <div class="card feat"><h3>Instant search</h3><p>Filters the whole tree as you type and highlights matches. It searches your bookmarks only — no web search, so your browser's search setup stays untouched.</p></div>
       <div class="card feat"><h3>Page descriptions (opt-in)</h3><p>Off by default. When enabled, descriptions are fetched locally-cached for 30 days; turning it off revokes the permission and clears the cache.</p></div>
       <div class="card feat"><h3>Bilingual UI</h3><p>Simplified Chinese and English, following the system language or forced in settings — applied live to every open page.</p></div>
       <div class="card feat"><h3>Cards or list</h3><p>Rich cards, or a denser multi-column list. Three card sizes, plus light/dark/system themes with no first-paint flash.</p></div>
@@ -103,8 +103,9 @@
     <div class="card">
       <p style="margin-top:0"><strong>Bookmarks stay in your browser.</strong> The extension reads the
       bookmark tree and Chrome's local icon cache, renders them, and uploads nothing — no analytics,
-      no trackers, no server. The only network access is the description fetch you explicitly enable,
-      which requests your bookmark URLs without cookies. Read the full
+      no trackers, no server. The only request it makes is the description fetch you explicitly enable,
+      which requests your bookmark URLs without cookies; with that switch off it makes no requests at
+      all. The search box filters your bookmarks locally and never searches the web. Read the full
       <a href="./privacy.html">privacy policy</a>.</p>
     </div>
 
@@ -134,7 +135,7 @@ python3 -m http.server 8899
       <table>
         <tr><th>Key</th><th>Action</th></tr>
         <tr><td><kbd>/</kbd></td><td>Focus the search box</td></tr>
-        <tr><td><kbd>Enter</kbd></td><td>Open the first matching bookmark, or search the web when nothing matches</td></tr>
+        <tr><td><kbd>Enter</kbd></td><td>Open the first matching bookmark</td></tr>
         <tr><td><kbd>Esc</kbd></td><td>Clear the query and return to the current folder view</td></tr>
         <tr><td><kbd>⌘</kbd>/<kbd>Ctrl</kbd> + click</td><td>Open a card in a background tab (native browser behavior)</td></tr>
       </table>

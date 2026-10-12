@@ -7,8 +7,10 @@ readable, card-based homepage. Written in plain vanilla JS/CSS — **no build st
 dependencies** — and installed straight from the repo via "Load unpacked".
 
 Design principle: **the extension collects nothing.** Your bookmark data comes from the browser's
-own `chrome.bookmarks` API and is only read and rendered locally. The one and only network
-behavior is the opt-in "page descriptions" feature that you enable yourself in settings.
+own `chrome.bookmarks` API and is only read and rendered locally. The only network behavior is the
+opt-in "page descriptions" feature that you enable yourself in settings. The search box filters your
+bookmarks locally and never performs a web search, so nothing about your browser's search setup is
+touched.
 
 ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
 ![Manifest](https://img.shields.io/badge/manifest-V3-green)
@@ -30,8 +32,8 @@ behavior is the opt-in "page descriptions" feature that you enable yourself in s
 - **Folder tabs + breadcrumb drill-down** — tabs are built from the subfolders of your
   bookmark-bar roots; keep drilling into nested folders and step back through the breadcrumb.
 - **Instant search** — filters the whole tree as you type, highlights the match, can show each
-  hit's folder path, and on Enter with no match hands the query to Chrome (`chrome.search.query()`),
-  so the web search runs in **the search engine you set in your own browser**.
+  hit's folder path. It searches **your bookmarks only**: there is no web-search fallback, no search
+  engine list and no search URLs in the package, so the extension cannot affect your search results.
 - **Page descriptions (optional, off by default)** — when enabled, the service worker reads each
   bookmark page's description and puts it on the card, caching results in `chrome.storage.local`
   with a 30-day TTL on success and 1-day on failure; cards fall back to the URL when a fetch fails.
@@ -90,7 +92,7 @@ Requires **Chrome 102+** (uses the MV3 `favicon` API).
 | Key | Function |
 |-----|----------|
 | `/` | Focus the search box |
-| `Enter` | Open the first matching bookmark, or search the web when nothing matches |
+| `Enter` | Open the first matching bookmark; with no match it stays on the "nothing found" state |
 | `Esc` | Clear the query and return to the current folder view |
 
 ---
@@ -143,7 +145,8 @@ the homepage. Everything is stored in `chrome.storage.sync`, so it follows your 
 | `optional_host_permissions: <all_urls>` | **Optional.** Requested only when you turn on "page descriptions", so the extension can visit the bookmark URLs themselves to read their description. Revoked as soon as you turn it off. |
 
 No browsing history is read, no data is uploaded, and there is no analytics or advertising code.
-Description requests explicitly omit credentials (no cookies) and the results stay on your machine.
+Description requests explicitly omit credentials (no cookies) and the results stay on your machine;
+with that switch off, the extension sends nothing anywhere.
 The "More apps" button in the header is an ordinary `<a target="_blank">` link: it only opens when
 you click it and requires no additional permission.
 
@@ -244,6 +247,11 @@ The generated colored initial is the intended fallback.
 No. It reads the bookmark tree and the local icon cache only, and uploads nothing. The single
 network behavior is the opt-in description fetch, which visits your bookmark URLs without cookies
 and caches results locally. Turn that switch off and the extension never touches the network.
+
+**Q: Does it change how search works in my browser?**
+No. The search box filters your bookmarks in memory. It has no web-search fallback, ships no search
+engine list or search URLs, and holds no `search` permission, so your default search provider, home
+page and start page are untouched.
 
 ---
 
