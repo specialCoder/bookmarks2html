@@ -3,12 +3,15 @@
 [English](README.md) | **简体中文**
 
 一个 Chrome 扩展（Manifest V3），把浏览器里已有的书签变成美观、易读的卡片式主页。
-纯原生 JS/CSS 实现，**零构建、零第三方依赖**，以「加载已解压的扩展程序」方式安装即可使用。
+纯原生 JS/CSS 实现，**零构建、零第三方依赖**。可以直接从
+[Chrome 应用商店](https://chromewebstore.google.com/detail/bookmarks2html/gflifmpboapeachpcabofnmiaahhkkag)
+安装，也可以用本仓库以「加载已解压的扩展程序」方式运行。
 
 核心设计原则：**扩展自身不采集任何数据。** 书签内容全部由浏览器本地 API（`chrome.bookmarks`）
 提供，扩展只负责读取与展示；唯一的网络行为是用户在设置里主动开启的「抓取网页简介」。搜索框只在
 本地过滤书签，不会发起网页搜索，因此完全不干涉浏览器的搜索体验。
 
+[![Version in Chrome Web Store](https://img.shields.io/chrome-web-store/v/gflifmpboapeachpcabofnmiaahhkkag)](https://chromewebstore.google.com/detail/bookmarks2html/gflifmpboapeachpcabofnmiaahhkkag)
 ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
 ![Manifest](https://img.shields.io/badge/manifest-V3-green)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-informational)
@@ -46,7 +49,14 @@
 
 ---
 
-## 安装（加载已解压的扩展程序）
+## 安装
+
+### 从 Chrome 应用商店安装（推荐）
+
+[在 Chrome 应用商店添加 bookmarks2html](https://chromewebstore.google.com/detail/bookmarks2html/gflifmpboapeachpcabofnmiaahhkkag)，
+然后新开一个标签页即可。商店里就是本仓库的同一份代码，且会自动更新。
+
+### 从源码安装（加载已解压的扩展程序）
 
 1. 克隆或下载本仓库。
 2. 打开 Chrome，进入 `chrome://extensions`。
@@ -197,8 +207,9 @@ python3 -m http.server 8899
 # → dist/bookmarks2html-v<version>.zip（manifest.json 位于压缩包根目录）
 ```
 
-版本号从 `manifest.json` 读取，并与 `CHANGELOG.md` 保持一致。该 zip 可直接上传 Chrome 应用商店，
-或解压后用于「加载已解压的扩展程序」。
+版本号从 `manifest.json` 读取，并与 `CHANGELOG.md` 保持一致。这个 zip 就是上传到
+[线上商店页面](https://chromewebstore.google.com/detail/bookmarks2html/gflifmpboapeachpcabofnmiaahhkkag)
+的包；开发时也可以解压后用于「加载已解压的扩展程序」。
 
 上架文案（单一用途声明、短描述、版本说明、逐权限理由、隐私政策地址、素材清单）见
 [`docs/store-listing.md`](docs/store-listing.md)。
@@ -215,8 +226,9 @@ python3 -m http.server 8899
 ## 常见问题
 
 **Q：不想要它接管新标签页了怎么办？**
-删除 `manifest.json` 中的 `chrome_url_overrides` 字段，然后在 `chrome://extensions` 中重新加载扩展；
-此时仍可通过工具栏图标打开书签主页。
+源码安装：删除 `manifest.json` 中的 `chrome_url_overrides` 字段，然后在 `chrome://extensions` 里
+重新加载扩展，此时仍可通过工具栏图标打开书签主页。商店安装：包内文件不可修改，在
+`chrome://extensions` 里关掉本扩展（或移除）即可恢复 Chrome 默认的新标签页。
 
 **Q：为什么有些卡片显示的是彩色字母而不是图标？**
 网站图标来自 Chrome 本地 favicon 缓存，从未访问过的站点取不到图标，此时显示由标题/域名生成的

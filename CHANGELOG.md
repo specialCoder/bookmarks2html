@@ -14,6 +14,12 @@ needs the `search` permission, which that build did not declare, so Enter threw 
 nothing. Instead of adding a permission for a fallback nobody needs, the feature is removed and the
 listing now describes only what the extension actually does.
 
+### Added
+- Published Chrome Web Store listing (`gflifmpboapeachpcabofnmiaahhkkag`, this build), and the docs now
+  point at it: store badge in both README headers, "Add to Chrome" as the primary install path with
+  "load unpacked" kept for development, a hero button on the landing page, and the item URL recorded in
+  `docs/store-listing.md` §1.
+
 ### Removed
 - The Enter-with-no-match web search: the `searchWeb()` call path and the `search` permission. The
   search box filters bookmarks only; with no match, Enter does nothing and the "nothing found" state

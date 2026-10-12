@@ -18,15 +18,18 @@ store's limits.
 
 - **Name:** bookmarks2html
 - **Version:** 1.1.1 (kept in sync with `manifest.json` and `CHANGELOG.md`)
+- **Store item:** https://chromewebstore.google.com/detail/bookmarks2html/gflifmpboapeachpcabofnmiaahhkkag
+  (ID `gflifmpboapeachpcabofnmiaahhkkag`; the live page reports Version 1.1.1)
 - **Website:** https://specialcoder.github.io/bookmarks2html/
 - **Source:** https://github.com/specialCoder/bookmarks2html
 - **License:** Apache-2.0
 - **Category:** Productivity
 - **Languages:** English, 简体中文 (the extension UI itself is bilingual)
 
-> `manifest.json` uses the same item name (`name` / `short_name` = `bookmarks2html`) but its
-> `description` is Chinese. Either ship `_locales` with a `default_locale` to make both languages
-> first-class, or fill the store name and description in the Dashboard — the Dashboard values win.
+> The published page currently shows the Chinese `manifest.json` description — that is what the
+> Dashboard fell back to. Either ship `_locales` with a `default_locale` to make both languages
+> first-class, or fill in an English store description in the Dashboard; the values are linked above
+> so a future edit can find this note.
 
 ---
 
@@ -67,8 +70,9 @@ Why install it:
 https://specialcoder.github.io/bookmarks2html/privacy.html
 ```
 
-Source file: `docs/privacy.html`. Requires GitHub Pages enabled (branch `main`, folder `/docs`)
-and the file pushed before the URL resolves.
+Source file: `docs/privacy.html`, served by GitHub Pages (branch `main`, folder `/docs`). Verified
+reachable on 2026-10-12, and it already carries the v1.1.1 wording (no web search, no `search`
+permission) so the policy matches the published package.
 
 ### Data privacy declarations (Dashboard → Privacy tab)
 
@@ -122,8 +126,10 @@ This is an optional, on-demand permission that is not requested at install time.
   "No bookmarks match" panel stays put, no tab opens, and DevTools → Network shows zero requests. In
   the console, `typeof chrome.search` is `undefined`.
 - **Package:** build with `tools/package.sh` →
-  `dist/bookmarks2html-v<version>.zip` (manifest at zip root)
-- **Unlisted / public:** public; source published at https://github.com/specialCoder/bookmarks2html
+  `dist/bookmarks2html-v<version>.zip` (manifest at zip root). `dist/bookmarks2html-v1.1.1.zip` is the
+  build that is live on the store.
+- **Visibility:** public, published at the item URL in §1; source published at
+  https://github.com/specialCoder/bookmarks2html
 - **In-product promotion:** the header has a "More apps" button linking to
   https://i.eatmango.cn/ (the developer's other tools). It is a plain `<a target="_blank">` link that
   opens only on user click, requests no permission, and sends no data — declare it in the review
@@ -135,6 +141,7 @@ This is an optional, on-demand permission that is not requested at install time.
 
 ## 8. Assets checklist (upload separately in the Dashboard)
 
+- [x] Listing published — v1.1.1 is live at the item URL in §1 (2026-10-12)
 - [x] Icon (128×128) — ready at `icons/icon128.png`
 - [x] Screenshot #1 (1280×800, the store maximum) — `docs/assets/screenshot-home-light.png`:
       light theme, English UI, card view with folder-tab counts and the hover tooltip.
@@ -142,8 +149,9 @@ This is an optional, on-demand permission that is not requested at install time.
 - [ ] Screenshots #2+ (optional, the store accepts up to 10) — dark theme, list view, options page
 - [ ] Store banner (1280×800)
 - [ ] Small promo tile (440×280)
-- [ ] Privacy policy URL (§5) is live and reachable
-- [ ] Description text (§2–§4) pasted, character limits confirmed by the Dashboard
+- [x] Privacy policy URL (§5) is live and reachable
+- [x] Description text (§2–§4) pasted — the live page resolves; note it still shows the Chinese
+      manifest description, so an English store description is worth setting in the Dashboard
 
 > Screenshot #1 predates the rename to `bookmarks2html`, so its header still reads "Bookmark Cards",
 > and it was captured against the developer's real bookmark tree (real folder and site names).

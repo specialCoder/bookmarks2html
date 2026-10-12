@@ -4,7 +4,9 @@
 
 A Chrome extension (Manifest V3) that turns the bookmarks you already have into a clean,
 readable, card-based homepage. Written in plain vanilla JS/CSS — **no build step, no third-party
-dependencies** — and installed straight from the repo via "Load unpacked".
+dependencies**. Install it from the
+[Chrome Web Store](https://chromewebstore.google.com/detail/bookmarks2html/gflifmpboapeachpcabofnmiaahhkkag),
+or load it straight from this repo.
 
 Design principle: **the extension collects nothing.** Your bookmark data comes from the browser's
 own `chrome.bookmarks` API and is only read and rendered locally. The only network behavior is the
@@ -12,6 +14,7 @@ opt-in "page descriptions" feature that you enable yourself in settings. The sea
 bookmarks locally and never performs a web search, so nothing about your browser's search setup is
 touched.
 
+[![Version in Chrome Web Store](https://img.shields.io/chrome-web-store/v/gflifmpboapeachpcabofnmiaahhkkag)](https://chromewebstore.google.com/detail/bookmarks2html/gflifmpboapeachpcabofnmiaahhkkag)
 ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
 ![Manifest](https://img.shields.io/badge/manifest-V3-green)
 ![Dependencies](https://img.shields.io/badge/dependencies-0-informational)
@@ -60,7 +63,14 @@ touched.
 
 ---
 
-## Install (load unpacked)
+## Install
+
+### Chrome Web Store (recommended)
+
+[Add to Chrome — bookmarks2html](https://chromewebstore.google.com/detail/bookmarks2html/gflifmpboapeachpcabofnmiaahhkkag),
+then open a new tab. This is the same code as this repository, and it updates automatically.
+
+### From source (load unpacked)
 
 1. Clone or download this repository.
 2. Open Chrome and go to `chrome://extensions`.
@@ -217,8 +227,9 @@ excluded on purpose.
 # → dist/bookmarks2html-v<version>.zip  (manifest.json at the zip root)
 ```
 
-The version is read from `manifest.json` and kept in sync with `CHANGELOG.md`. The zip can be
-uploaded to the Chrome Web Store as-is, or unpacked for "Load unpacked".
+The version is read from `manifest.json` and kept in sync with `CHANGELOG.md`. This is the zip we
+upload to the [live listing](https://chromewebstore.google.com/detail/bookmarks2html/gflifmpboapeachpcabofnmiaahhkkag);
+the same folder can be loaded unpacked for development.
 
 Store copy — single purpose statement, short description, release notes, per-permission
 justifications, privacy policy URL and asset checklist — lives in
@@ -236,8 +247,10 @@ The icons are PNGs generated for this repository and committed with it.
 ## FAQ
 
 **Q: I don't want it to own my new tab page.**
-Remove the `chrome_url_overrides` entry from `manifest.json` and reload the extension in
-`chrome://extensions`. The toolbar icon still opens the bookmark homepage.
+Source install: remove the `chrome_url_overrides` entry from `manifest.json` and reload the extension
+in `chrome://extensions` — the toolbar icon still opens the bookmark homepage. Store install: the
+package can't be edited, so switch the extension off in `chrome://extensions` (or remove it) to get
+Chrome's default new tab page back.
 
 **Q: Why do some cards show a colored letter instead of an icon?**
 Icons come from Chrome's local favicon cache, which has nothing for sites you have never visited.
